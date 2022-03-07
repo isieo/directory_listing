@@ -45,7 +45,7 @@ module Sinatra
       page.public_folder = settings.public_folder
       page.request_path = request.path
       page.request_params = request.params
-      page.current_page = URI.unescape(request.path)
+      page.current_page = CGI.unescape(request.path)
       
       ##
       # Set the erb template to embed in, the readme, stylesheet, and favicon
@@ -63,7 +63,7 @@ module Sinatra
       # Get an array of files to be listed. 
       
       files = Array.new
-      Dir.foreach(File.join(settings.public_folder, URI.unescape(request.path))) do |file|
+      Dir.foreach(File.join(settings.public_folder, CGI.unescape(request.path))) do |file|
         files.push(file)
       end
 
@@ -85,7 +85,7 @@ module Sinatra
         # Otherwise, create an array of Resources:
         
         resources = Array.new
-        Dir.foreach(File.join(settings.public_folder, URI.unescape(request.path))) do |resource|
+        Dir.foreach(File.join(settings.public_folder, CGI.unescape(request.path))) do |resource|
           resources.push(Resource.new(resource, page))
         end
         

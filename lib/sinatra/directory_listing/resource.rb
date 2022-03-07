@@ -25,7 +25,7 @@ class Resource
   # Returns the mtime as a Time object so it can be sorted.
 
   def set_mtime(file)
-    f = File.join(File.join(@page.public_folder, URI.unescape(@page.request_path)), file)
+    f = File.join(File.join(@page.public_folder, CGI.unescape(@page.request_path)), file)
     html = "\t<td>#{File.mtime(f).strftime(@page.last_modified_format)}</td>"
     return [File.mtime(f), html]
   end
@@ -38,7 +38,7 @@ class Resource
   def set_size(file)
     html = ""
     size = ''
-    f = File.join(File.join(@page.public_folder, URI.unescape(@page.request_path)), file)
+    f = File.join(File.join(@page.public_folder, CGI.unescape(@page.request_path)), file)
     if File.directory?(f)
       size = 0
       html = "\t<td>-</td>"
@@ -58,9 +58,9 @@ class Resource
     ##
     # Make sure we're working with an unescaped file name.
     # Remove the extension if neccesary and truncate it.
-    # URI.unescape seems to work best to decode uris. 
+    # CGI.unescape seems to work best to decode uris. 
 
-    file = URI.unescape(file).force_encoding("utf-8")
+    file = CGI.unescape(file).force_encoding("utf-8")
     file_noext = file.gsub(File.extname(file), "") if @page.should_show_file_exts == false
     if file_noext
       file_truncated = file_noext.truncate(@page.filename_truncate_length, '...')
@@ -72,7 +72,7 @@ class Resource
     # If the requested resource is in the root public directory, the link is 
     # just the resource itself without the public directory path as well. 
 
-    requested = Pathname.new(URI.unescape(@page.request_path)).cleanpath
+    requested = Pathname.new(CGI.unescape(@page.request_path)).cleanpath
     pub_folder = Pathname.new(@page.public_folder).cleanpath
     if requested.eql?(pub_folder)
       link = file
@@ -84,7 +84,7 @@ class Resource
     # Add a class of "dir" to directories and "file" to files.
 
     html = ""
-    if File.directory?(URI.unescape(File.join(@page.public_folder, link)))
+    if File.directory?(CGI.unescape(File.join(@page.public_folder, link)))
       html << "\t<td class='dir'>"
       
       ##

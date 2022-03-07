@@ -45,7 +45,7 @@ class Page
     path_count = path_array.count
     params = self.request_params_display
   
-    if URI.unescape(self.current_page) == "/"
+    if CGI.unescape(self.current_page) == "/"
       nav_bar = "Index of /"
     else
       nav_bar = "Index of <a href=\'/#{params}'>/</a>"
