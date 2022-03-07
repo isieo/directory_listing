@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'sinatra', '>=1.4.5'
   s.add_dependency 'filesize', '>=0.0.2'
   s.add_dependency 'truncate', '>=0.0.4'
+  s.add_dependency 'temple', '>=0.7.7'
   
   s.add_development_dependency "rake", "~> 10.1.0"
   s.add_development_dependency "bundler", "~> 1.3"
